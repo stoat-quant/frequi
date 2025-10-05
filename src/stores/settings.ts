@@ -47,7 +47,7 @@ export const useSettingsStore = defineStore('uiSettings', {
       return this.isDarkTheme ? 'dark' : 'light';
     },
     uiVersion(state) {
-      return `${state._uiVersion}-${__COMMIT_HASH__}`;
+      return `${state._uiVersion}-dev`;
     },
   },
   actions: {
@@ -58,7 +58,7 @@ export const useSettingsStore = defineStore('uiSettings', {
           const { version } = result.data;
           this._uiVersion = version ?? 'dev';
         } catch (error) {
-          //
+          console.error(error);
         }
       }
     },

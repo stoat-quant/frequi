@@ -1,7 +1,6 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 
 import createVuePlugin from '@vitejs/plugin-vue';
-import { execSync } from 'child_process';
 import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import IconsResolve from 'unplugin-icons/resolver';
@@ -11,18 +10,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 import { PrimeVueResolver } from '@primevue/auto-import-resolver';
 
-let commitHash: string = 'unknown';
-try {
-  commitHash = execSync('git rev-parse --short HEAD').toString();
-} catch (error) {
-  console.error('Failed to get commit hash. Running in this mode will not be supported.');
-}
-
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    __COMMIT_HASH__: JSON.stringify(commitHash),
-  },
   plugins: [
     createVuePlugin({
       script: {
@@ -63,15 +52,5 @@ export default defineConfig({
     },
     host: '127.0.0.1',
     port: 3000,
-  },
-  test: {
-    environment: 'happy-dom',
-    exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/e2e/**',
-      '**/.{idea,git,cache,output,temp}/**',
-      '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
-    ],
   },
 });
